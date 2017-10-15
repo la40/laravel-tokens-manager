@@ -1,0 +1,20 @@
+language: php
+
+php:
+  - 7.0
+
+before_install:
+  - composer self-update
+  - composer create-project --prefer-dist laravel/laravel laravel
+  - cd ./laravel
+  - composer config repositories.lachezargrigorov vcs https://github.com/lachezargrigorov/laravel-tokens-manager.git
+  - composer require "lachezargrigorov/laravel-tokens-manager:dev-master"
+  - cp ./vendor/lachezargrigorov/laravel-tokens-manager/tests/travis_cp/.env ./
+  - cp -rf ./vendor/lachezargrigorov/laravel-tokens-manager/tests/travis_cp/AppServiceProvider.php ./app/Providers
+  - cp -rf ./vendor/lachezargrigorov/laravel-tokens-manager/tests/travis_cp/phpunit.xml ./vendor/lachezargrigorov/laravel-tokens-manager
+  - php artisan vendor:publish --provider="Lachezargrigorov\TokensManager\TokensManagerServiceProvider" --tag="migrations"
+  - mysql -e "create database IF NOT EXISTS test;" -uroot
+  - php artisan migrate
+  - cd ./vendor/lachezargrigorov/laravel-tokens-manager
+
+script: "phpunit"
