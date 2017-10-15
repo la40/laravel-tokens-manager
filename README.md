@@ -33,24 +33,23 @@ If you do not run Laravel 5.5 and want to use the facade, add this to your alias
 ``` php
 //using Facades
 
-//1. Create token
+//1. Create token with payload
 $token = Tokens::use('default')->create(['userId' => 123]);
 
-//2. Send confirmation url with created token to user per email 
+//2. Send confirmation url with created token to user per email.
 
-//3. User click on confirmation  url
+//3. User click on confirmation url.
 
-//4.Get the token's payload by the token in the url. 
+//4.Get the token's payload from the token in the url.
 //This will delete the token!
 $payload = Tokens::use('default')->get($token);
 
+//if token exist and not expired
 if($payload)
 {
-    //token exist and not expired
-    
     $userId = $payload["userId"];
     
-    //validate user's email
+    //confirm user email
 }
 
 //using IOC
@@ -73,12 +72,13 @@ Token not found
 $payload = Tokens::use('default')->get($token); //null
 ```
 
-Delete token
+**Expired tokens are deleted automatically on every Tokens::use call for all managers so you can't receive the payload of expired token and you don't need to delete them manually too!**
+
+If you still wants to delete a token
 
 ``` php
 $payload = Tokens::use('default')->delete($token);
 ```
-**Expired tokens are deleted automatically on every Tokens::use call for all managers so you can't receive the payload of expired token and you don't need to delete them manually too!**
 
 ## Testing
 
