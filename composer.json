@@ -47,7 +47,7 @@
                 "Lachezargrigorov\\TokensManager\\TokensManagerServiceProvider"
             ],
             "aliases": {
-                "tokens-manager": "Lachezargrigorov\\TokensManager\\Facades\\TokensManager"
+                "TokensManager": "Lachezargrigorov\\TokensManager\\Facades\\TokensManager"
             }
         }
     },
